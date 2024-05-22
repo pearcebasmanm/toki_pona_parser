@@ -1,6 +1,6 @@
 # Toki Pona Parser
 
-An experimental parser for the Toki Pona conlang.
+An experimental parser for the Toki Pona conlang. Currently runs as a basic REPL, but could easily be made into a library, or something more advanced.
 
 ## Sentences
 
@@ -44,7 +44,8 @@ This form is not currently supported:
 
 Other notes:
 
-- Preverbs to not support modifiers (like the "taso" in "mi wile taso pali")
+- Preverbs do not support modifiers (like the "taso" in "mi wile taso pali")
+- Verbs do no support X ala X questions (they register as modifiers)
 - Ignores punctuation
 - Does not support "loaned-modifiers" (and only a limited number of nimi pi pu ala)
 - There are likely other flaws I'm missing, as I have no comprehensive tests
