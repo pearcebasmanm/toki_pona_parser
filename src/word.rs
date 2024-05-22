@@ -1,5 +1,5 @@
 use casey::lower;
-use std::{fmt::Display, str::FromStr};
+use std::{error::Error, fmt::Display, str::FromStr};
 
 macro_rules! word_repetition {
     ($($word:ident)*) => {
@@ -9,16 +9,27 @@ macro_rules! word_repetition {
         }
 
         impl FromStr for Word {
-            type Err = ();
+            type Err = ParseWordError;
 
             fn from_str(s: &str) -> Result<Self, Self::Err> {
                 match s {
                     $( lower!(stringify!($word)) => Ok(Self::$word), )*
-                    _ => Err(())
+                    _ => Err(ParseWordError(s.into()))
                 }
             }
         }
     };
+}
+
+#[derive(Debug)]
+pub struct ParseWordError(String);
+
+impl Error for ParseWordError {}
+
+impl Display for ParseWordError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "Could not recognise word '{}'", self.0)
+    }
 }
 
 impl Word {
@@ -27,7 +38,7 @@ impl Word {
     }
 
     pub fn is_preposition(&self) -> bool {
-        [Self::Tawa, Self::Kepeken, Self::Lon].contains(self)
+        [Self::Tawa, Self::Kepeken, Self::Lon, Self::Tan].contains(self)
     }
 
     pub fn is_preverb(&self) -> bool {
@@ -164,4 +175,28 @@ word_repetition!(
     Wawa
     Weka
     Wile
+    Kijetesantakalu
+    Kin
+    Kipisi
+    Ku
+    Leko
+    Meli
+    Mije
+    Misikeke
+    Monsuta
+    N
+    Namako
+    Soko
+    Tonsi
+    Ali
+    Epiku
+    Jasima
+    Kokosila
+    Lanpan
+    Linluwi
+    Majuna
+    Meso
+    Nimisin
+    Oko
+    Su
 );
